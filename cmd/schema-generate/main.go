@@ -15,6 +15,7 @@ var (
 	o                     = flag.String("o", "", "The output file for the schema.")
 	p                     = flag.String("p", "main", "The package that the structs are created in.")
 	i                     = flag.String("i", "", "A single file path (used for backwards compatibility).")
+	noCode 				  = flag.Bool("noCode", false, "Disable generation of additional marshal and unmarshal code")
 	schemaKeyRequiredFlag = flag.Bool("schemaKeyRequired", false, "Allow input files with no $schema key.")
 )
 
@@ -63,5 +64,6 @@ func main() {
 		}
 	}
 
-	generate.Output(w, g, *p)
+	allowCodeGeneration := !*noCode
+	generate.Output(w, g, *p, allowCodeGeneration)
 }
